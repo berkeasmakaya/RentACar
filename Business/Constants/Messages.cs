@@ -85,5 +85,6 @@ namespace Business.Constants
         public static string CheckReturndateTrue = "Return date is null.";
         public static string CheckReturnDateFalse = "Return date is not null.";
 
+        public static string CarImageLimitExceed = "Numbers of car images are not more than 5";
     }
 }
