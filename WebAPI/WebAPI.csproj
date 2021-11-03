@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-	 <Folder Include="NewFolder\" />
 	 <Folder Include="wwwroot\Uploads\" />
   </ItemGroup>
 
