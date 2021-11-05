@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    public class IAuthManager:IAuthService
+    public class AuthManager : IAuthService
     {
         private IUserService _userService;
         private ITokenHelper _tokenHelper;
 
-        public IAuthManager(IUserService userService, ITokenHelper tokenHelper)
+        public AuthManager(IUserService userService, ITokenHelper tokenHelper)
         {
             _userService = userService;
             _tokenHelper = tokenHelper;
@@ -33,17 +33,17 @@ namespace Business.Concrete
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {
             var userToCheck = _userService.GetByMail(userForLoginDto.Email);
-            if (userToCheck == null)
+            if (userToCheck==null)
             {
                 return new ErrorDataResult<User>("Kullanıcı Bulunamadı");
             }
 
-            if (HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
+            if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
             {
-                return new ErrorDataResult<User>("Parola Hatası");
+                return new ErrorDataResult<User>("Parola Hatası!");
             }
 
-            return new SuccessDataResult<User>(userToCheck,"Başarılı Giriş");
+            return new SuccessDataResult<User>(userToCheck, "Başarılı Giriş");
         }
 
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
@@ -59,8 +59,9 @@ namespace Business.Concrete
                 PasswordSalt = passwordSalt,
                 Status = true
             };
+
             _userService.Add(user);
-            return new SuccessDataResult<User>(user, "Kayıt Oldu");
+            return new SuccessDataResult<User>(user, "Kayıt Başarılı");
         }
 
         public IResult UserExists(string email)
@@ -69,6 +70,7 @@ namespace Business.Concrete
             {
                 return new ErrorResult();
             }
+
             return new SuccessResult();
         }
     }
