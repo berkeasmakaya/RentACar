@@ -38,7 +38,7 @@ namespace WebAPI
             //services.AddSingleton<ICarService, CarManager>();
             //services.AddSingleton<ICarDal, EfCarDal>();
 
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            
 
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
